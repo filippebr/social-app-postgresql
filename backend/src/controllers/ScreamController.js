@@ -8,25 +8,24 @@ module.exports = {
     return res.json(screams);
   },
 
-  async create(req, res) {
-    const { user_handle, body } = req.body;
+  async create(req, res, next) {
+    try {
+      const { user_handle, body } = req.body;
 
-    const id = crypto.randomBytes(4).toString('HEX');
-
-    const newScream = {
-      id,
-      user_handle,
-      body
+      const id = crypto.randomBytes(4).toString('HEX');
+  
+      const newScream = {
+        id,
+        user_handle,
+        body
+      }
+  
+      await connection('screams').insert(newScream);
+      
+      return res.status(201).send();
+    } catch(error) {
+      next(error);
     }
-
-    await connection('screams')
-    .insert(newScream)
-    .then(() => {
-      res.json({ message: `Document ${id} created successfully` });
-    })
-    .catch(err => {
-      res.status(500).json({ error: 'Something went wrong'});
-      console.error(err);
-    })
+    
   }
 };

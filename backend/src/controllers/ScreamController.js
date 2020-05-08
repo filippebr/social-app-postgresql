@@ -26,6 +26,7 @@ module.exports = {
       await connection('screams').insert(newScream);
       
       return res.status(201).send();
+      
     } catch(error) {
       next(error);
     }

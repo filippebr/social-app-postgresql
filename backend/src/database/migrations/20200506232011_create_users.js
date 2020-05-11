@@ -4,7 +4,7 @@ exports.up = function(knex) {
     table.string('id').primary();
     
     table.string('email').unique().notNullable();
-    table.string('user_handle').notNullable();
+    table.string('user_handle').notNullable();    
 
     table.timestamps(true, true);
   })

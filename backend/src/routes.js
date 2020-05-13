@@ -2,6 +2,7 @@ const express = require('express');
 
 const ScreamController = require('./controllers/ScreamController');
 const UserController = require('./controllers/UserController');
+const SessionController = require('./controllers/SessionController');
 
 const routes = express.Router();
 
@@ -12,6 +13,7 @@ routes.post('/users', UserController.create);
 routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
 
-routes.post('/singup/:id', UserController.delete);
+// New
+routes.post('/signup', SessionController.create);
 
 module.exports = routes;

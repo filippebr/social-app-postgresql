@@ -14,6 +14,6 @@ routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
 
 // New
-routes.post('/signup', SessionController.create);
+routes.post('/login', SessionController.register);
 
 module.exports = routes;

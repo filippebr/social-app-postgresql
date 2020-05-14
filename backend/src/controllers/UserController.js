@@ -10,19 +10,20 @@ module.exports = {
 
   async create(req, res, next) {
     try {
-      const { email, user_handle } = req.body;
+      const { email, password, user_handle } = req.body;
 
       const id = crypto.randomBytes(4).toString('HEX');
 
       const newUser = {
         id,
         email,
+        password,
         user_handle
       }
-  
+      
       await connection('users').insert(newUser);
   
-      return res.status(201).send();
+      return res.status(201).send();           
 
     } catch (error) {
       next(error);

@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { hash, compare } = require('bcryptjs');
+const { hash, compare, genSalt } = require('bcryptjs');
 const connection = require('../database/connection');
 
 module.exports = {
@@ -15,7 +15,9 @@ module.exports = {
 
       const id = crypto.randomBytes(4).toString('HEX');
 
-      const hashedPassword = await hash(password, 10);
+      const saltRounds = 10;
+      const salt = await genSalt(saltRounds);
+      const hashedPassword = await hash(password, salt);
 
       const newUser = {
         id,

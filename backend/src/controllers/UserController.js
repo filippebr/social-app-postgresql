@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { hash, compare } = require('bcryptjs');
 const connection = require('../database/connection');
 
 module.exports = {
@@ -13,13 +14,6 @@ module.exports = {
       const { email, password, user_handle } = req.body;
 
       const id = crypto.randomBytes(4).toString('HEX');
-
-      const query = connection('users');
-
-      // Check if the user already exist 
-      if ( email && password && user_handle ) {
-        query.where({ email });      
-      } 
 
       const hashedPassword = await hash(password, 10);
 

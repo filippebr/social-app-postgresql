@@ -14,16 +14,25 @@ module.exports = {
 
       const id = crypto.randomBytes(4).toString('HEX');
 
+      const query = connection('users');
+
+      // Check if the user already exist 
+      if ( email && password && user_handle ) {
+        query.where({ email });      
+      } 
+
+      const hashedPassword = await hash(password, 10);
+
       const newUser = {
         id,
         email,
-        password,
+        password: hashedPassword,
         user_handle
       }
       
       await connection('users').insert(newUser);
   
-      return res.status(201).send();           
+      return res.status(201).send({ message: 'User Created' });           
 
     } catch (error) {
       next(error);

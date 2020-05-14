@@ -8,7 +8,7 @@ module.exports = {
 
     try {
       // 1. Check if user exist
-      const user = connection('users').find(user => user.email === email);
+      //const user = connection('users').find(user => user.email === email);
 
       const hashedPassword = await hash(password, 10);
       console.log(hashedPassword);

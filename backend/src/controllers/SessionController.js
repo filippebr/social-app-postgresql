@@ -47,8 +47,11 @@ module.exports = {
 
       if (!valid) throw new Error ("Password not correct");
 
+      // Create Refresh and Accesstoken
+      const accesstoken = 
+      const refreshtoken = 
       
-      
+
       return res.json(user);
        
       

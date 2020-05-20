@@ -29,5 +29,20 @@ module.exports = {
     } catch (error) {
       next(error);
     }
+  },
+
+  async signin(req, res) {
+    try {
+      const { email } = req.body;
+
+      //const user = await connection.raw("SELECT * FROM users WHERE email = ?", [email]);
+      const user = await connection('users').where({email});
+  
+      if ( user ) {
+        return res.json(user);
+      }
+    } catch(err) {
+      next(error);
+    }    
   }
-}
+ }

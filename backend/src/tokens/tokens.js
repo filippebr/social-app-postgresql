@@ -12,7 +12,23 @@ const createRefreshToken = userId => {
   });
 };
 
+const sendAccessToken = (res, req, accesstoken) => {
+  res.send({
+    accesstoken,
+    email: req.body.email
+  });
+}
+
+const sendRefreshToken = (res, refreshtoken) => {
+  res.cookie('refreshtoken', token, {
+    httpOnly: true,
+    path: '/refresh_token',
+  })
+}
+
 module.export = {
   createAccessToken,
-  createRefreshToken
+  createRefreshToken,
+  sendAccessToken,
+  sendRefreshToken
 }

@@ -26,7 +26,7 @@ const sendRefreshToken = (res, refreshtoken) => {
   })
 }
 
-module.export = {
+module.exports = {
   createAccessToken,
   createRefreshToken,
   sendAccessToken,

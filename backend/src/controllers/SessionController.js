@@ -1,13 +1,13 @@
-require('dotenv/config');
-const connection = require('../database/connection');
+require('dotenv').config();
 const { 
   createAccessToken,
   createRefreshToken,
   sendAccessToken,
   sendRefreshToken
 } = require('../tokens/tokens');
-
 const { hash, compare } = require('bcryptjs');
+
+const connection = require('../database/connection');
 
 module.exports = {
   async register(req, res, next) {
@@ -47,7 +47,7 @@ module.exports = {
       // Find user in "database". If not exist send error 
       const user = await connection('users').where({email});
       
-      if (!user) throw new Error("User does not exist");
+      // if (!user) throw new Error("User does not exist");
 
       // Compare crypted password and see if it checks out. Send error if not
       const valid = await compare(password, user[0].password);
@@ -55,11 +55,12 @@ module.exports = {
       // if (!valid) throw new Error("Password not correct");
 
       // Create Refresh and Accesstoken
-      // const accesstoken = createAccessToken(user.id);
-      // const refreshtoken = createRefreshToken(user.id);      
+      
+      const accesstoken = createAccessToken(user[0].id);
+      const refreshtoken = createRefreshToken(user[0].id);      
 
       // // Put the refreshtoken in the "database"
-      // user.refreshtoken = refreshtoken;
+      // user[0].refreshtoken = refreshtoken;
       
       // const results = await connection('users');
 

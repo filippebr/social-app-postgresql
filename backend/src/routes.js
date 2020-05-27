@@ -14,6 +14,8 @@ routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
 
 // New
-routes.post('/signin', SessionController.signin);
+routes.post('/login', SessionController.login);
+routes.delete('/logout', SessionController.logout);
+routes.post('/protected', SessionController.protected);
 
 module.exports = routes;

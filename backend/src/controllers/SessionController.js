@@ -6,7 +6,7 @@ const {
   sendRefreshToken
 } = require('../tokens/tokens');
 const { hash, compare } = require('bcryptjs');
-const isAuth = require('../authentication/isAuth');
+const { isAuth } = require('../authentication/isAuth');
 
 const connection = require('../database/connection');
 
@@ -105,6 +105,7 @@ module.exports = {
         });
       }
     } catch(error) {
+      console.log("protected");
       next(error);
     }
   }

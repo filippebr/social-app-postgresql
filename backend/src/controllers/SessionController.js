@@ -59,21 +59,18 @@ module.exports = {
       const accesstoken = createAccessToken(user[0]);
       const refreshtoken = createRefreshToken(user[0]);      
 
-      console.log(accesstoken);
-      console.log(refreshtoken);
-      console.log(user[0]);
+      // console.log(accesstoken);
+      // console.log(refreshtoken);
+      // console.log(user[0]);
 
       // Put the refreshtoken in the "database"
       user[0].refreshtoken = refreshtoken;
       
+      // Send token. Refreshtoken as a cookie and accesstoken as regular response
       sendRefreshToken(res, refreshtoken);
       sendAccessToken(res, req, accesstoken);
 
-      // Send token. Refreshtoken as a cookie and accesstoken as regular response
-      // sendRefreshToken(res, refreshtoken);
-      // sendAccessToken(res, req, accesstoken);
-
-      return res.json(user);       
+      // return res.json(user);       
       
     } catch(error) {
       next(error);
@@ -85,7 +82,7 @@ module.exports = {
     try {
       res.clearCookie('refreshtoken');
 
-      return res.send({
+      return res.json({
         message: 'Logged out'
       });
 
@@ -100,7 +97,7 @@ module.exports = {
       const userId = isAuth(req);
 
       if ( userId !== null ) {
-        res.send({
+        return res.json({
           data: 'This is protected data.'
         });
       }

@@ -17,5 +17,6 @@ routes.delete('/users/:id', UserController.delete);
 routes.post('/login', SessionController.login);
 routes.delete('/logout', SessionController.logout);
 routes.post('/protected', SessionController.protected);
+routes.post('/refresh_token', SessionController.refresh_token);
 
 module.exports = routes;

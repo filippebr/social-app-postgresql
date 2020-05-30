@@ -68,7 +68,7 @@ module.exports = {
       
       // Send token. Refreshtoken as a cookie and accesstoken as regular response
       sendRefreshToken(res, refreshtoken);
-      sendAccessToken(res, req, accesstoken);
+      // sendAccessToken(res, req, accesstoken);
 
       // return res.json(user);       
       
@@ -80,7 +80,7 @@ module.exports = {
   // Logout the user, use _req because never will be used
   async logout(_req, res, next) {
     try {
-      res.clearCookie('refreshtoken');
+      res.clearCookie('refreshtoken', { path: '/refresh_token' });
 
       return res.json({
         message: 'Logged out'
@@ -103,6 +103,27 @@ module.exports = {
       }
     } catch(error) {
       console.log("protected");
+      next(error);
+    }
+  }, 
+
+  async refresh_token(req, res, next) {
+    try {
+      const token = req.cookies.refreshtoken;
+
+      // We have a token, let's verify it!
+      let payload = null;
+      
+      try {
+        payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
+      } catch(error) {
+        return res.json({ accesstoken: '' });
+      }
+
+      // Token is valid, check if user exist
+      const user = await connection('users').where({ id: payload.userId });
+
+    } catch(error) {
       next(error);
     }
   }
